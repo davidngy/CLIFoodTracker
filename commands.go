@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 type Command struct {
 	Name        string
@@ -15,11 +18,20 @@ func getCommands() map[string]Command {
 			Description: "Show available commands",
 			Callback:    commandHelp,
 		},
-		"user setup": {
+		"user-setup": {
 			Name:        "user setup",
 			Description: "Creating a User",
 			Callback: func(args []string) error {
 				fmt.Println("created")
+				return nil
+			},
+		},
+		"exit": {
+			Name:        "exit",
+			Description: "closing the application",
+			Callback: func(args []string) error {
+				fmt.Println("bye!")
+				os.Exit(0)
 				return nil
 			},
 		},
