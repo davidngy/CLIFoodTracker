@@ -2,15 +2,29 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("No .env file found")
+	}
 	scanner := bufio.NewScanner(os.Stdin)
 	commands := getCommands()
+	ctx := context.Background()
+	db, err := connectDB(ctx)
+	if err != nil {
+		fmt.Println("DB error", err)
+		return
+	}
 
+	defer db.Close()
 	for {
 		fmt.Print("diet >	")
 		if !scanner.Scan() {
