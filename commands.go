@@ -8,7 +8,7 @@ import (
 type Command struct {
 	Name        string
 	Description string
-	Callback    func(args []string) error
+	Callback    func(*Config, []string) error
 }
 
 func getCommands() map[string]Command {
@@ -18,18 +18,16 @@ func getCommands() map[string]Command {
 			Description: "Show available commands",
 			Callback:    commandHelp,
 		},
-		"user-setup": {
+		"create-user": {
 			Name:        "user setup",
 			Description: "Creating a User",
-			Callback: func(args []string) error {
-				fmt.Println("created")
-				return nil
-			},
+			Callback:    commandCreateUser,
 		},
+		"select-user": {},
 		"exit": {
 			Name:        "exit",
 			Description: "closing the application",
-			Callback: func(args []string) error {
+			Callback: func(config *Config, args []string) error {
 				fmt.Println("bye!")
 				os.Exit(0)
 				return nil

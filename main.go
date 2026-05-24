@@ -25,6 +25,11 @@ func main() {
 	}
 
 	defer db.Close()
+
+	cfg := &Config{
+		DB: db,
+	}
+
 	for {
 		fmt.Print("diet >	")
 		if !scanner.Scan() {
@@ -46,7 +51,7 @@ func main() {
 
 		args := words[1:]
 
-		err := cmd.Callback(args)
+		err := cmd.Callback(cfg, args)
 		if err != nil {
 			fmt.Println(err)
 		}
